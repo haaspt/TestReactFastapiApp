@@ -25,13 +25,10 @@ const App = () => {
       date: taskDate,
     }
     setTasks([...tasks, newTask]);
-    console.log(tasks);
   }
 
   const deleteTask = (taskID) => {
-    console.log('Deleting task!')
     setTasks(tasks.filter(task => task.id !== taskID));
-    console.log(tasks);
   }
 
   return (
