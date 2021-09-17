@@ -1,17 +1,11 @@
-import { useState } from 'react';
 import Task from "./Task";
 
-const TaskList = ({ taskList }) => {
-    const [tasks, setTasks] = useState(taskList);
-
-    const onTaskDelete = (id) => {
-        setTasks(tasks.filter(task => task.id !== id));
-    }
+const TaskList = ({ taskList, onTaskDelete }) => {
 
     return (
         <div>
-            {tasks.length > 0 ?
-                tasks.map((task) =>
+            {taskList.length > 0 ?
+                taskList.map((task) =>
                     <Task task={task} onTaskDelete={onTaskDelete} key={task.id} />
                 )
                 : "No tasks yet!"}
