@@ -11,7 +11,7 @@ client = TestClient(app)
 
 @pytest.fixture
 def setup_sample_task() -> TaskInDB:
-    sample_task_request = TaskRequest(text="Testing...", date="Testing...")
+    sample_task_request = TaskRequest(text="Testing...", date="2021-01-01")
     response = client.post("/task/", json=sample_task_request.dict())
     return response.json()
 
@@ -32,7 +32,7 @@ def test_get_tasks():
 
 
 def test_post_task():
-    sample_task_request = TaskRequest(text="Testing...", date="Testing...")
+    sample_task_request = TaskRequest(text="Testing...")
     response = client.post("/task/", json=sample_task_request.dict())
     assert response.status_code == 200
 
