@@ -13,7 +13,8 @@ def get_tasks(db: Session, limit: Optional[int] = None) -> List[models.Task]:
 
 
 def create_task(db: Session, task: types.TaskRequest) -> models.Task:
-    db_task = models.Task(text=task.text, date=date.fromisoformat(task.date))
+    formatted_date = date.fromisoformat(task.date) if task.date else None
+    db_task = models.Task(text=task.text, date=formatted_date)
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
