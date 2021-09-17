@@ -6,14 +6,14 @@ const TaskInput = ({ onTaskSubmit }) => {
     const today = new Date();
     const dateString = today.toISOString().substring(0, 10);
     return dateString;
-  }
+  };
 
   const getMinimumDateString = () => {
     const date = new Date();
     date.setDate(date.getDate() - 1);
     const dateString = date.toISOString().substring(0, 10);
     return dateString;
-  }
+  };
 
   const [todoText, setTodoText] = useState("");
   const [todoDate, setTodoDate] = useState(getTodayDateString());
@@ -34,7 +34,7 @@ const TaskInput = ({ onTaskSubmit }) => {
     // console.log(`Submitting todo: ${todoText} (${todoDate})`);
     onTaskSubmit(todoText, todoDate);
     setTodoText("");
-    setTodoDate("");
+    setTodoDate(getTodayDateString());
   };
 
   return (
@@ -46,14 +46,14 @@ const TaskInput = ({ onTaskSubmit }) => {
           onChange={handleTextChange}
           placeholder={"What do you need to do?"}
         ></input>
-        <br/>
+        <br />
         <input
           type="date"
           value={todoDate}
           min={getMinimumDateString()}
           onChange={handleDateChange}
         ></input>
-        <br/>
+        <br />
         <input type="submit" value="Add Task" />
       </form>
     </div>
