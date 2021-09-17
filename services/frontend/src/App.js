@@ -1,9 +1,13 @@
-function App() {
+import Header from './components/Header'
+import TaskList from './components/TaskList'
+
+const App = () => {
   return (
-    <div className="App">
-      <h1>Hello, world!</h1>
+    <div>
+      <Header />
+      <TaskList />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
