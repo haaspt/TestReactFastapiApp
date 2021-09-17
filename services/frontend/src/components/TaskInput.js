@@ -31,15 +31,16 @@ const TaskInput = ({ onTaskSubmit }) => {
           type="text"
           value={todoText}
           onChange={handleTextChange}
-          placeholder={"What do you need to get done?"}
+          placeholder={"What do you need to do?"}
         ></input>
+        <br/>
         <input
-          type="text"
+          type="date"
           value={todoDate}
           onChange={handleDateChange}
-          placeholder={"When do you need to do it?"}
         ></input>
-        <input type="submit" value="Submit" />
+        <br/>
+        <input type="submit" value="Add Task" />
       </form>
     </div>
   );
