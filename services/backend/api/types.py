@@ -14,6 +14,9 @@ class TaskRequest(BaseTask):
 class TaskInDB(BaseTask):
     id: int
 
+    class Config:
+        orm_mode = True
+
 
 class ErrorMessage(BaseModel):
     message: str

@@ -1,13 +1,19 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from typing import List
-from . import db
+from sqlalchemy.orm.session import Session
+from . import crud, models
+from .database import SessionLocal, engine
 from .types import (
     TaskRequest,
     TaskInDB,
     ErrorMessage,
 )
+
+
+models.Base.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
 
@@ -28,22 +34,30 @@ app.add_middleware(
 )
 
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 @app.get("/")
 async def get_root():
     return {"data": "Hello, world!"}
 
 
 @app.get("/tasks", response_model=List[TaskInDB])
-async def get_tasks():
-    tasks = db.get_tasks()
-    return tasks
+async def get_tasks(db: Session = Depends(get_db)):
+    db_tasks = crud.get_tasks(db)
+    return db_tasks
 
 
 @app.get(
     "/task/{task_id}", response_model=TaskInDB, responses={404: {"model": ErrorMessage}}
 )
-async def get_task(task_id: int):
-    task = db.get_task_by_id(task_id)
+async def get_task(task_id: int, db: Session = Depends(get_db)):
+    task = crud.get_task(db, task_id)
     if task:
         return task
     else:
@@ -51,18 +65,17 @@ async def get_task(task_id: int):
 
 
 @app.post("/task/", response_model=TaskInDB)
-async def post_task(task: TaskRequest):
-    task_id = db.add_task(task.text, task.date)
-    task_out = TaskInDB(**task.dict(), id=task_id)
+async def post_task(task: TaskRequest, db: Session = Depends(get_db)):
+    task_out = crud.create_task(db, task)
     return task_out
 
 
 @app.delete(
     "/task/{task_id}", response_model=TaskInDB, responses={404: {"model": ErrorMessage}}
 )
-async def delete_task(task_id: int):
+async def delete_task(task_id: int, db: Session = Depends(get_db)):
     try:
-        deleted_task = db.remove_task_by_id(task_id)
+        deleted_task = crud.delete_task(db, task_id)
         return deleted_task
     except KeyError:
         return JSONResponse(
