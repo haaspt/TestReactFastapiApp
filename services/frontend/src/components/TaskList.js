@@ -1,31 +1,22 @@
-import Task from "./Task"
+import { useState } from 'react';
+import Task from "./Task";
 
-const TaskList = () => {
-    const tasks = [
-        {
-            id: 1,
-            text: "Kiss Ally!",
-            date: "9/16/2021"
-        },
-        {
-            id: 2,
-            text: "Make steak",
-            date: "9/17/2021"
-        },
-        {
-            id: 3,
-            text: "Do work",
-            date: "Never!"
-        },
-    ]
+const TaskList = ({ taskList }) => {
+    const [tasks, setTasks] = useState(taskList);
+
+    const onTaskDelete = (id) => {
+        setTasks(tasks.filter(task => task.id !== id));
+    }
 
     return (
         <div>
-            {tasks.map((task) =>
-                <Task task={task} key={task.id} />
-            )}
+            {tasks.length > 0 ?
+                tasks.map((task) =>
+                    <Task task={task} onTaskDelete={onTaskDelete} key={task.id} />
+                )
+                : "No tasks yet!"}
         </div>
     )
 }
 
-export default TaskList
+export default TaskList;
