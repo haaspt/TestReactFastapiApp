@@ -9,7 +9,7 @@ def get_task(db: Session, task_id: int) -> Optional[models.Task]:
 
 
 def get_tasks(db: Session, limit: Optional[int] = None) -> List[models.Task]:
-    return db.query(models.Task).limit(limit).all()
+    return db.query(models.Task).limit(limit).order_by(models.Task.date).all()
 
 
 def create_task(db: Session, task: types.TaskRequest) -> models.Task:
