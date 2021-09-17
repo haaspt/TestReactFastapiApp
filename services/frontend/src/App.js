@@ -6,35 +6,61 @@ import TaskList from './components/TaskList';
 const App = () => {
   const [tasks, setTasks] = useState([])
 
+  const fetchInitialTasks = async () => {
+    const results = await axios.get(
+      'http://localhost:8000/tasks',
+    );
+
+    setTasks(results.data);
+  };
+
+  const postTaskToServer = async ( task ) => {
+    const result = await axios.post(
+      'http://localhost:8000/task',
+      task
+    );
+    return result.data;
+  };
+
+  const deleteTaskFromServer = async ( taskID ) => {
+    const result = await axios.delete(
+      `http://localhost:8000/task/${taskID}`,
+    );
+    return result.data;
+  }
+
+  // Initial task fetch
   useEffect(() => {
-    const fetchInitialTasks = async () => {
-      const result = await axios(
-        'http://localhost:8000/tasks',
-      );
-
-      setTasks(result.data);
-    };
-
     fetchInitialTasks();
   }, []);
+
   const addTask = (taskText, taskDate) => {
-    
-    const newTask = {
-      id: Math.max(...tasks.map(task => task.id), 0) + 1,
+
+    const requestTask = {
       text: taskText,
       date: taskDate,
-    }
-    setTasks([...tasks, newTask]);
+    };
+
+    postTaskToServer(requestTask).then(
+      (createdTask) => {
+        setTasks([...tasks, createdTask]);
+      }
+    );
   }
 
   const deleteTask = (taskID) => {
-    setTasks(tasks.filter(task => task.id !== taskID));
+    deleteTaskFromServer(taskID).then(
+      (resultData) => {
+        console.log(resultData);
+        setTasks(tasks.filter(task => task.id !== taskID));
+      }
+    );
   }
 
   return (
     <div>
-      <Header onTaskSubmit={addTask}/>
-      <TaskList taskList={tasks} onTaskDelete={deleteTask}/>
+      <Header onTaskSubmit={addTask} />
+      <TaskList taskList={tasks} onTaskDelete={deleteTask} />
     </div>
   )
 }
