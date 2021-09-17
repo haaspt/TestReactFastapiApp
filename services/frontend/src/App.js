@@ -34,7 +34,7 @@ const App = () => {
     };
 
     postTaskToServer(requestTask).then((createdTask) => {
-      setTasks([...tasks, createdTask]);
+      setTasks([createdTask, ...tasks]);
     });
   };
 
