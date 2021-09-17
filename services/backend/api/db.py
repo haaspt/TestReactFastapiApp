@@ -3,9 +3,7 @@ from typing import Dict, List, Optional
 from .types import TaskInDB
 
 tasks: Dict[int, TaskInDB] = {
-    1: TaskInDB(id=1, text="Kiss Ally!", date="9/16/2021"),
-    2: TaskInDB(id=2, text="Cook steak", date="9/17/2021"),
-    3: TaskInDB(id=3, text="Do work....", date="Never!!"),
+    1: TaskInDB(id=1, text="This is a sample task, try adding your own!", date="9/16/2021"),
 }
 
 
