@@ -35,15 +35,13 @@ async def get_tasks():
     return tasks_dict
 
 
-@app.get("/task/{task_id}",
-         response_model=Task,
-         responses={404: {"model": Message}})
+@app.get("/task/{task_id}", response_model=Task, responses={404: {"model": Message}})
 async def get_task(task_id: int):
     task = db.get_task_by_id(task_id)
     if task:
         return task.to_dict()
     else:
-        JSONResponse(status_code=404, content={"message": "Item not found"})
+        return JSONResponse(status_code=404, content={"message": "Item not found"})
 
 
 @app.post("/task/", response_model=TaskIn)
@@ -53,15 +51,13 @@ async def post_task(task: TaskIn):
     return task_out
 
 
-@app.delete("/task/{task_id}",
-            response_model=Task,
-            responses={404: {"model": Message}})
+@app.delete("/task/{task_id}", response_model=Task, responses={404: {"model": Message}})
 async def delete_task(task_id: int):
     try:
         deleted_task = db.remove_task_by_id(task_id)
         return deleted_task
     except KeyError:
-        JSONResponse(
+        return JSONResponse(
             status_code=404,
             content={"message": f"Item with id {task_id} was not found"},
         )
