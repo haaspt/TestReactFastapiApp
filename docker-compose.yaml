@@ -6,9 +6,13 @@ services:
     command: uvicorn api.api:app --reload --host 0.0.0.0 --port 8000
     ports:
       - 8000:8000
+    volumes: 
+      - ./services/backend/api:/app/api
   frontend:
     build: services/frontend
     ports:
       - 3000:3000
+    volumes:
+      - ./services/frontend/src:/app/src
     environment:
       - CHOKIDAR_USEPOLLING=true
