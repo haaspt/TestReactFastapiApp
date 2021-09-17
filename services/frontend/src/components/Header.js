@@ -1,4 +1,5 @@
-import TaskInput from "./TaskInput"
+import { PropTypes } from "prop-types";
+import TaskInput from "./TaskInput";
 
 const Header = ({ onTaskSubmit }) => {
     return (
@@ -7,6 +8,10 @@ const Header = ({ onTaskSubmit }) => {
             <TaskInput onTaskSubmit={onTaskSubmit}/>
         </div>
     )
+}
+
+Header.propTypes = {
+    onTaskSubmit: PropTypes.func.isRequired,
 }
 
 export default Header

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PropTypes } from 'prop-types';
 
 const TaskInput = ({ onTaskSubmit }) => {
     const [todoText, setTodoText] = useState('');
@@ -32,6 +33,10 @@ const TaskInput = ({ onTaskSubmit }) => {
             </form>
         </div>
     )
+}
+
+TaskInput.propTypes = {
+    onTaskSubmit: PropTypes.func.isRequired,
 }
 
 export default TaskInput
