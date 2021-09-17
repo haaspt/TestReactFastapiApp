@@ -2,8 +2,21 @@ import { useState } from "react";
 import { PropTypes } from "prop-types";
 
 const TaskInput = ({ onTaskSubmit }) => {
+  const getTodayDateString = () => {
+    const today = new Date();
+    const dateString = today.toISOString().substring(0, 10);
+    return dateString;
+  }
+
+  const getMinimumDateString = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    const dateString = date.toISOString().substring(0, 10);
+    return dateString;
+  }
+
   const [todoText, setTodoText] = useState("");
-  const [todoDate, setTodoDate] = useState("");
+  const [todoDate, setTodoDate] = useState(getTodayDateString());
 
   const handleTextChange = (event) => {
     setTodoText(event.target.value);
@@ -37,6 +50,7 @@ const TaskInput = ({ onTaskSubmit }) => {
         <input
           type="date"
           value={todoDate}
+          min={getMinimumDateString()}
           onChange={handleDateChange}
         ></input>
         <br/>

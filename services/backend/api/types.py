@@ -1,18 +1,19 @@
+import datetime
 from typing import Optional
 from pydantic import BaseModel
 
 
 class BaseTask(BaseModel):
     text: str
-    date: Optional[str] = None
 
 
 class TaskRequest(BaseTask):
-    pass
+    date: Optional[str] = None
 
 
 class TaskInDB(BaseTask):
     id: int
+    date: Optional[datetime.date] = None
 
     class Config:
         orm_mode = True

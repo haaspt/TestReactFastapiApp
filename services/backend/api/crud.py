@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from . import models, types
@@ -12,7 +13,7 @@ def get_tasks(db: Session, limit: Optional[int] = None) -> List[models.Task]:
 
 
 def create_task(db: Session, task: types.TaskRequest) -> models.Task:
-    db_task = models.Task(text=task.text, date=task.date)
+    db_task = models.Task(text=task.text, date=date.fromisoformat(task.date))
     db.add(db_task)
     db.commit()
     db.refresh(db_task)
