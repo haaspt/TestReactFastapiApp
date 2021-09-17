@@ -1,3 +1,4 @@
+import { PropTypes } from "prop-types";
 import Task from "./Task";
 
 const TaskList = ({ taskList, onTaskDelete }) => {
@@ -11,6 +12,17 @@ const TaskList = ({ taskList, onTaskDelete }) => {
                 : "No tasks yet!"}
         </div>
     )
+}
+
+TaskList.propTypes = {
+    taskList: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            text: PropTypes.string.isRequired,
+            date: PropTypes.string,
+        })
+    ).isRequired,
+    onTaskDelete: PropTypes.func.isRequired,
 }
 
 export default TaskList;
