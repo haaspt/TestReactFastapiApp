@@ -32,7 +32,7 @@ jobs:
         flake8 services/backend/ --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
     - name: Format check with black
       run: |
-        black services/backend/api services/backend/test --check
+        black services/backend/api services/backend/tests --check
     - name: Test with pytest
       run: |
         pytest services/backend/test
