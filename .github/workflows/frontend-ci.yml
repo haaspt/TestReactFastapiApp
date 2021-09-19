@@ -36,5 +36,5 @@ jobs:
       - name: Build and test
         run: |
           npm ci --prefix services/frontend/
-          npm build --prefix services/frontend/
+          npm run build --prefix services/frontend/
           npm run test --prefix services/frontend/
