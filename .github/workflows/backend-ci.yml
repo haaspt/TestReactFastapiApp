@@ -35,4 +35,4 @@ jobs:
         black services/backend/api services/backend/tests --check
     - name: Test with pytest
       run: |
-        pytest services/backend/test
+        pytest services/backend/tests
